@@ -12,6 +12,10 @@ class AddNewPostPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kPrimaryColor,
+        leading: Icon(
+          Icons.arrow_back,
+          color: kSecondaryColor,
+        ),
         title: const Text(
           "New Post",
           style: TextStyle(fontWeight: FontWeight.bold, color: kSecondaryColor),
