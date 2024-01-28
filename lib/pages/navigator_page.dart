@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/constant/colors.dart';
 
-import 'package:instagram_clone/pages/add_new_post_page.dart';
+import 'package:instagram_clone/pages/file_pick_page.dart';
 import 'package:instagram_clone/pages/home_page.dart';
 import 'package:instagram_clone/pages/profile_page.dart';
 import 'package:instagram_clone/pages/reels_page.dart';
@@ -20,7 +21,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
     return [
       const HomePage(),
       const SearchPage(),
-      const AddNewPostPage(),
+      const FilePickPage(),
       const ReelsPage(),
       const ProfilePage()
     ];
@@ -42,6 +43,10 @@ class _NavigatorPageState extends State<NavigatorPage> {
           iconSize: 30,
           icon: const Icon(
             Icons.search,
+            color: kSecondaryColor,
+          ),
+          inactiveIcon: const Icon(
+            CupertinoIcons.search,
             color: kSecondaryColor,
           )),
       PersistentBottomNavBarItem(
