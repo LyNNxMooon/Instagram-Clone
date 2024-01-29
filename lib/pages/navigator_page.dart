@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/constant/colors.dart';
 
 import 'package:instagram_clone/pages/file_pick_page.dart';
