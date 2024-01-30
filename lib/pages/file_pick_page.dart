@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:instagram_clone/bloc/add_post_bloc.dart';
 import 'package:instagram_clone/constant/colors.dart';
 import 'package:instagram_clone/constant/dimensions.dart';
 import 'package:instagram_clone/pages/add_new_post_page.dart';
+import 'package:instagram_clone/utils/enums.dart';
 import 'package:instagram_clone/utils/extension.dart';
+import 'package:instagram_clone/utils/file_picker_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:provider/provider.dart';
 
 class FilePickPage extends StatelessWidget {
   const FilePickPage({super.key});
@@ -48,26 +52,41 @@ class FilePickPage extends StatelessWidget {
               ],
             ),
             Gap(kSP40x),
-            Row(
-              children: [
-                IconsItemView(
-                    icon: Icons.video_library_rounded, iconCaption: "Recents"),
-                Gap(kSP20x),
-                GestureDetector(
-                  onTap: () => PersistentNavBarNavigator.pushNewScreen(context,
-                      screen: AddNewPostPage(), withNavBar: false),
-                  child: IconsItemView(
-                      icon: CupertinoIcons.photo, iconCaption: "Photos"),
-                ),
-                Gap(kSP20x),
-                GestureDetector(
-                  onTap: () => PersistentNavBarNavigator.pushNewScreen(context,
-                      screen: AddNewPostPage(), withNavBar: false),
-                  child: IconsItemView(
-                      icon: Icons.play_circle_outline, iconCaption: "Videos"),
-                )
-              ],
-            )
+            Builder(builder: (filePickerContext) {
+              final bloc = filePickerContext.read<AddPostBloc>();
+              return Row(
+                children: [
+                  IconsItemView(
+                      icon: Icons.video_library_rounded,
+                      iconCaption: "Recents"),
+                  Gap(kSP20x),
+                  GestureDetector(
+                    onTap: () async {
+                      final image = await FilePickerUtils.getImage();
+
+                      bloc.setFileType = FileType.photo;
+                      bloc.setSelectedFile = image;
+                      PersistentNavBarNavigator.pushNewScreen(context,
+                          screen: AddNewPostPage(), withNavBar: false);
+                    },
+                    child: IconsItemView(
+                        icon: CupertinoIcons.photo, iconCaption: "Photos"),
+                  ),
+                  Gap(kSP20x),
+                  GestureDetector(
+                    onTap: () async {
+                      final video = await FilePickerUtils.getVideo();
+                      bloc.setFileType = FileType.video;
+                      bloc.setSelectedFile = video;
+                      PersistentNavBarNavigator.pushNewScreen(context,
+                          screen: AddNewPostPage(), withNavBar: false);
+                    },
+                    child: IconsItemView(
+                        icon: Icons.play_circle_outline, iconCaption: "Videos"),
+                  )
+                ],
+              );
+            })
           ],
         ),
       ),
